@@ -1,0 +1,24 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: api-deployment
+spec:
+  replicas: 2  # Número de réplicas
+  selector:
+    matchLabels:
+      app: api
+  template:
+    metadata:
+      labels:
+        app: api
+    spec:
+      containers:
+        - name: api
+          image: mi-api-express  # Imagen Docker
+          ports:
+            - containerPort: 3000
+          env:
+            - name: JWT_SECRET
+              value: "supersecreto"  # Configura tu variable de entorno
+            - name: DATABASE_URL
+              value: postgresql://apirest_dss_user:Gp7LR5DFZ5UmqsmvXUMv0pGoaymLsf99@dpg-culcfsan91rc73ea60kg-a.ohio-postgres.render.com/apirest_dss
