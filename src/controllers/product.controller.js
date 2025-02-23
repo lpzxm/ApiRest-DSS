@@ -9,7 +9,7 @@ export async function getAllProducts(req, res) {
 //controlador para obtener un producto por id
 export async function getProductById(req, res) {
     const product = await prisma.product.findUnique({ where: { id: Number(req.params.id) } });
-    product ? res.json(product) : res.status(404).json({ error: 'Product not found' });
+    product ? res.json(product) : res.status(404).json({ error: '404 - Producto no encontrado' });
 };
 
 //controlador para crear un nuevo producto
@@ -26,7 +26,7 @@ export async function updateProduct(req, res) {
         const product = await prisma.product.update({ where: { id: Number(req.params.id) }, data: { name, description, price } });
         res.json(product);
     } catch (error) {
-        res.status(404).json({ error: 'Product not found' });
+        res.status(404).json({ error: '404 - Producto no encontrado' });
     }
 };
 
@@ -36,6 +36,6 @@ export async function deleteProduct(req, res) {
         await prisma.product.delete({ where: { id: Number(req.params.id) } });
         res.json({ message: 'Product deleted' });
     } catch (error) {
-        res.status(404).json({ error: 'Product not found' });
+        res.status(404).json({ error: '404 - Producto no encontrado' });
     }
 };

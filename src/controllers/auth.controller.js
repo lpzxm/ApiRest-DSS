@@ -11,7 +11,7 @@ export async function register(req, res) {
         const user = await prisma.user.create({ data: { email, password: hashedPassword } });
         res.status(201).json({ user });
     } catch (error) {
-        res.status(400).json({ error: 'Email already exists' });
+        res.status(400).json({ error: 'El correo ya existe, intenta con otro' });
     }
 };
 
@@ -20,7 +20,7 @@ export async function login(req, res) {
     const { email, password } = req.body;
     const user = await prisma.user.findUnique({ where: { email } });
     if (!user || !(await bcrypt.compare(password, user.password))) {
-        return res.status(401).json({ error: 'Invalid credentials' });
+        return res.status(401).json({ error: 'Credenciales incorrectas' });
     }
     const token = jwt.sign({ id: user.id }, process.env.JWT_SECRET, { expiresIn: '1h' });
     res.json({ token });
